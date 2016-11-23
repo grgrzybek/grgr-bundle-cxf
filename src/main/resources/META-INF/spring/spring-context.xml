@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:cxf="http://camel.apache.org/schema/cxf"
+        xmlns:httpj="http://cxf.apache.org/transports/http-jetty/configuration"
+        xmlns:camel="http://camel.apache.org/schema/spring"
+        xsi:schemaLocation="
+            http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+            http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd
+            http://cxf.apache.org/transports/http-jetty/configuration http://cxf.apache.org/schemas/configuration/http-jetty.xsd
+            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+    <!--<import resource="classpath:/META-INF/cxf/cxf.xml" />-->
+
+    <!--<httpj:engine-factory bus="cxf">-->
+        <!--<httpj:engine port="8888" />-->
+    <!--</httpj:engine-factory>-->
+
+    <!--<cxf:cxfEndpoint address="http://localhost:8888/xxx" id="ep"-->
+            <!--serviceClass="grgr.test.cxf.service.Service" />-->
+    <cxf:cxfEndpoint address="/xxx" id="ep"
+            serviceClass="grgr.test.cxf.service.Service" />
+
+    <bean id="myBean" class="grgr.test.cxf.service.SimpleProcessor" />
+
+    <camel:camelContext>
+        <camel:route>
+            <camel:from uri="cxf:bean:ep" />
+            <camel:process ref="myBean" />
+            <camel:to uri="log:grgr.test?level=INFO" />
+        </camel:route>
+    </camel:camelContext>
+
+</beans>

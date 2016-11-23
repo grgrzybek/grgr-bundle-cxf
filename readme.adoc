@@ -1,0 +1,7 @@
+
+==== creating a profile with bundle
+
+    profile-create my
+    profile-edit --feature camel-spring --feature camel-cxf my
+    profile-edit --bundle mvn:grgr.test/bundle-cxf/0.1.0.BUILD-SNAPSHOT;start-level=93
+    container-add-profile child my
